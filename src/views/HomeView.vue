@@ -1,11 +1,11 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <h4>이유-맘잡고모의프로젝트</h4>
+    <h4>이유-맘잡고모의프로젝트2</h4>
 
 
 
-    <div>commit 테스트</div>
+    <div>commit 테스트2</div>
 
 
 
