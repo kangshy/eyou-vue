@@ -64,7 +64,8 @@ export default {
               this.data = {
                 //backend로 전송될 POST 데이터
                 snsId: snsId,
-                nickname:nickname
+                nickname:nickname,
+                profile_img:profile_img
               };
               axios.post("http://localhost:8090/user/login", this.data).then((response) => {
                   console.log("response: ", response);
