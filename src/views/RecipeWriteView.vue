@@ -193,7 +193,7 @@
         <div class="exp">{{ $t("description.autoSave") }}</div>
         <div>
           <div class="btn-pre fl margin-bottom-40" v-show="this.step !== 0" @click="validateByStep(-1)">{{ $t("button.back") }}</div>
-          <div class="btn-next fr " v-show="this.step !== 3" @click="validateByStep(+1)">{{ $t("button.next") }}</div>
+          <div class="btn-next fr" v-show="this.step !== 3" @click="validateByStep(+1)">{{ $t("button.next") }}</div>
           <div class="btn-next fr" v-show="this.step === 3" @click="publish">{{ $t("button.saveAndPreview") }}</div>
         </div>
     </div>
@@ -301,12 +301,20 @@ export default {
     validateByStep(arrow) {
       // validate data by step then go next/back
       // push "WATER" for essential ingredient on step 1before go to step 2
+      let list=this.selectedIngredients;
       if (arrow > 0 && this.step === 0 && !this.checkQuantity()) {
         return;
       } else if (arrow > 0 && this.step === 1) {
-        this.selectedIngredients.push({ ingredientId: 1, key: "WATER", volume: "" });
+        if(list.length===0 
+          || list[list.length-1].key!=="WATER") {
+          list.push({ ingredientId: 1, key: "WATER", volume: "" });
+        }
       } else if (arrow < 0 && this.step === 2) {
-        this.selectedIngredients.pop();
+        if(list.length!==0
+          && list[list.length-1].key==="WATER"
+          && list[list.length-1].volume.trim()==="") {
+          list.pop();
+        }
       } else if (arrow > 0 && this.step === 2) {
         if (
           !this.checkTitles() ||
@@ -338,14 +346,17 @@ export default {
       e.target.src = emptyImg;
     },
     setSelectedIng(item) {
-      let index = this.selectedIngredients.findIndex(x => x.ingredientId === item.id);
+      let list=this.selectedIngredients;
+      let index = list.findIndex(x => x.ingredientId === item.id);
       if(index>=0) {
-        this.selectedIngredients.splice(index, 1);
+        list.splice(index, 1);
       }else{
-        this.selectedIngredients.push({
-          ingredientId: item.id,
-          key: item.key,
-          volume: '' });
+        let water_idx = list.findIndex(x=> x.ingredientId === 1);
+        if(water_idx<0) {
+          list.push({ingredientId: item.id, key: item.key, volume: '' });
+        } else {
+          list.splice(water_idx, 0, {ingredientId : item.id, key: item.key, volume:''});
+        }
       }
     },
 
@@ -640,8 +651,4 @@ export default {
 </script>
 
 <style scoped>
-.pickpicture {
-  display: none;
-  z-index: 5;
-}
 </style>
