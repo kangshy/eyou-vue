@@ -1,13 +1,14 @@
 <template>
   <main class="recipewrite">
     <!-- 공개여부(open) 값에 따라서 미리보기(false)/상세보기(true)로 구분 -->
+    <!-- TODO : 미리보기의 경우 어느 곳에서 왔는지 확인하고 write에서 왔으면 -2, 아니면 -1로 돌아가야함-->
     <div class="row">
       <h1 class="fl" v-if="recipe_data.open === true">
         <img src="@/assets/images/icon_back.png" alt="돌아가기" title="돌아가기" style="cursor: pointer;" @click="$router.go(-1)">
         <span class="color-orange padding-left-15">{{ $t("title.viewRecipe") }}</span>
       </h1>
       <h1 class="fl" v-else>
-        <img src="@/assets/images/icon_back.png" alt="돌아가기" title="돌아가기" style="cursor: pointer;">
+        <img src="@/assets/images/icon_back.png" alt="돌아가기" title="돌아가기" style="cursor: pointer;" @click="$router.go(-2)">
         <span class="color-orange padding-left-15">{{ $t("title.previewRecipe") }}</span>
       </h1>
     </div>

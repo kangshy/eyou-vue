@@ -2,7 +2,7 @@
   <main class="recipewrite">
     <div class="row">
       <h1 class="fl">
-        <img src="@/assets/images/icon_back.png" alt="돌아가기" title="돌아가기">
+        <img src="@/assets/images/icon_back.png" alt="돌아가기" title="돌아가기" @click="$router.go(-1)">
         <span class="color-orange padding-left-15">{{ $t("title.writeRecipe") }}</span>
       </h1>
       <div class="btn_close fr" @click="reset">닫기</div>
